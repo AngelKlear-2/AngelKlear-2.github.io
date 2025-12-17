@@ -5,14 +5,438 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AKdownloader - Standoff 2 Private Server</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #ffffff;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Шапка */
+        header {
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            color: #ff4655;
+            font-size: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #ff4655, #ff8a00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Основной контент */
+        .intro {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ff8a00;
+        }
+
+        .intro p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .warning {
+            background-color: rgba(255, 70, 85, 0.1);
+            border-left: 4px solid #ff4655;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .warning h3 {
+            color: #ff4655;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        /* Карточки загрузок */
+        .downloads-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .download-card {
+            background: rgba(20, 20, 40, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .download-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 70, 85, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 2.2rem;
+            margin-right: 15px;
+            color: #ff4655;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card-details {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-details p {
+            color: #bbb;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .version {
+            color: #ff8a00 !important;
+            font-weight: 600;
+        }
+
+        .size {
+            color: #4dabf7 !important;
+            font-weight: 600;
+        }
+
+        .download-btn {
+            display: block;
+            background: linear-gradient(90deg, #ff4655, #ff8a00);
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            letter-spacing: 0.5px;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(90deg, #ff2e3f, #ff7700);
+            box-shadow: 0 5px 15px rgba(255, 70, 85, 0.4);
+        }
+
+        .download-btn i {
+            margin-right: 10px;
+        }
+
+        /* Инструкция */
+        .instructions {
+            background: rgba(30, 30, 60, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .instructions h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ff8a00;
+            text-align: center;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .step {
+            background: rgba(40, 40, 70, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: #ff4655;
+            border-radius: 50%;
+            line-height: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .step p {
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+
+        /* Подвал */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+        }
+
+        .disclaimer {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #aaa;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .downloads-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .download-card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>AKdownloader - Standoff 2 Private Server</h1>
-    <h1>
-        <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/PE/ProjectEvolution.10.0.1.f1.apk">Скачать Project Evolution (v10.0.1, 2 ГБ)</a>
-        <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/SLL/">Скачать StandLeo Lite (v1.0, 500 МБ)</a>
-        <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/SL/">Скачать StandLeo (v10.0.1, 2 ГБ)</a>
-        <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/SC/">Скачать StandChillow (v2.0 OBT F2, 2 ГБ)</a>
-    </h1>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-gamepad logo-icon"></i>
+                <h1>AKdownloader</h1>
+            </div>
+            <p class="subtitle">Скачивайте приватные сервера Standoff 2 для Android. Получите доступ к уникальным возможностям, скинам и режимам игры!</p>
+        </header>
+
+        <main>
+            <section class="intro">
+                <h2>Приватные сервера Standoff 2</h2>
+                <p>Выберите один из доступных приватных серверов Standoff 2. Каждый сервер предлагает уникальные функции, скины и игровые режимы, недоступные в официальной версии игры.</p>
+                
+                <div class="warning">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Важная информация</h3>
+                    <p>Установка приватных серверов может привести к блокировке аккаунта в официальной игре. Используйте отдельный аккаунт для игры на приватных серверах. Установка выполняется на свой страх и риск.</p>
+                </div>
+            </section>
+
+            <section class="downloads-container">
+                <div class="download-card">
+                    <div class="card-header">
+                        <i class="fas fa-bolt card-icon"></i>
+                        <div class="card-title">Project Evolution</div>
+                    </div>
+                    <div class="card-details">
+                        <p>Самый популярный приватный сервер с большим количеством функций</p>
+                        <p class="version">Версия: 10.0.1</p>
+                        <p class="size">Размер: 2 ГБ</p>
+                        <p>Функции: все скины, режимы, читы</p>
+                    </div>
+                    <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/PE/ProjectEvolution.10.0.1.f1.apk" class="download-btn">
+                        <i class="fas fa-download"></i> Скачать
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="card-header">
+                        <i class="fas fa-crown card-icon"></i>
+                        <div class="card-title">StandLeo Lite</div>
+                    </div>
+                    <div class="card-details">
+                        <p>Облегченная версия StandLeo с базовыми функциями</p>
+                        <p class="version">Версия: 1.0</p>
+                        <p class="size">Размер: 500 МБ</p>
+                        <p>Функции: основные скины, без лишних элементов</p>
+                    </div>
+                    <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/SLL/" class="download-btn">
+                        <i class="fas fa-download"></i> Скачать
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="card-header">
+                        <i class="fas fa-fire card-icon"></i>
+                        <div class="card-title">StandLeo</div>
+                    </div>
+                    <div class="card-details">
+                        <p>Полнофункциональный приватный сервер от команды Leo</p>
+                        <p class="version">Версия: 10.0.1</p>
+                        <p class="size">Размер: 2 ГБ</p>
+                        <p>Функции: все скины, анти-бан, новые режимы</p>
+                    </div>
+                    <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/SL/" class="download-btn">
+                        <i class="fas fa-download"></i> Скачать
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <div class="card-header">
+                        <i class="fas fa-snowflake card-icon"></i>
+                        <div class="card-title">StandChillow</div>
+                    </div>
+                    <div class="card-details">
+                        <p>Сервер с уникальными читами и возможностями</p>
+                        <p class="version">Версия: 2.0 OBT F2</p>
+                        <p class="size">Размер: 2 ГБ</p>
+                        <p>Функции: уникальные читы, кастомный интерфейс</p>
+                    </div>
+                    <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/SC/" class="download-btn">
+                        <i class="fas fa-download"></i> Скачать
+                    </a>
+                </div>
+            </section>
+
+            <section class="instructions">
+                <h2>Как установить приватный сервер</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Скачайте APK файл</h3>
+                        <p>Нажмите на кнопку скачивания для выбранного приватного сервера</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Разрешите установку</h3>
+                        <p>В настройках Android разрешите установку приложений из неизвестных источников</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Установите приложение</h3>
+                        <p>Запустите скачанный APK файл и установите приватный сервер</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Наслаждайтесь игрой</h3>
+                        <p>Запустите приватный сервер и войдите в свой аккаунт</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="disclaimer">
+                <p><i class="fas fa-info-circle"></i> Внимание: Этот сайт не связан с официальными разработчиками Standoff 2. Все файлы предоставляются "как есть". Автор сайта не несет ответственности за возможные проблемы с аккаунтом или устройством. Используйте на свой страх и риск.</p>
+            </div>
+            <p>AKdownloader &copy; 2023 | Standoff 2 Private Servers</p>
+        </footer>
+    </div>
+
+    <script>
+        // Простая анимация при наведении на кнопки
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadButtons = document.querySelectorAll('.download-btn');
+            
+            downloadButtons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.03)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Добавляем счетчик кликов на кнопки
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const serverName = this.closest('.download-card').querySelector('.card-title').textContent;
+                    console.log(`Скачивание начато: ${serverName}`);
+                    // Здесь можно добавить аналитику
+                });
+            });
+        });
+    </script>
 </body>
 </html>
