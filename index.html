@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скачать игры | StandLeo, StandChillow, Project Evolution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f1f1f1;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: #4cc9f0;
+            margin-right: 15px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b8b8d1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+
+        .game-header {
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .game-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .standleo-icon {
+            color: #ff6b6b;
+        }
+
+        .standleo-lite-icon {
+            color: #4ecdc4;
+        }
+
+        .standchillow-icon {
+            color: #ffe66d;
+        }
+
+        .evolution-icon {
+            color: #9d4edd;
+        }
+
+        .game-title {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .game-version {
+            color: #b8b8d1;
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .game-description {
+            padding: 20px;
+            color: #d1d1e9;
+            height: 120px;
+            overflow-y: auto;
+        }
+
+        .game-description::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .game-description::-webkit-scrollbar-thumb {
+            background: rgba(76, 201, 240, 0.5);
+            border-radius: 5px;
+        }
+
+        .game-details {
+            padding: 0 20px 20px;
+            display: flex;
+            justify-content: space-between;
+            color: #b8b8d1;
+            font-size: 0.9rem;
+        }
+
+        .game-details div {
+            display: flex;
+            align-items: center;
+        }
+
+        .game-details i {
+            margin-right: 5px;
+        }
+
+        .download-btn {
+            display: block;
+            background: linear-gradient(90deg, #4361ee, #3a0ca3);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(90deg, #3a56d4, #2d0a8a);
+            letter-spacing: 1px;
+        }
+
+        .download-btn i {
+            margin-right: 10px;
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .instructions h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4cc9f0;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        .warning {
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 4px solid #ff6b6b;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+        }
+
+        .warning i {
+            color: #ff6b6b;
+            margin-right: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b8b8d1;
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #4cc9f0;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .game-card {
+                margin-bottom: 10px;
+            }
+            
+            .instructions {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .game-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-gamepad logo-icon"></i>
+            </div>
+            <h1>Скачать игры</h1>
+            <p class="subtitle">Бесплатное скачивание последних версий игр: StandLeo, StandLeo Lite, StandChillow и Project Evolution</p>
+        </header>
+
+        <main>
+            <div class="games-grid">
+                <!-- StandLeo -->
+                <div class="game-card">
+                    <div class="game-header">
+                        <i class="fas fa-lion standleo-icon game-icon"></i>
+                        <h2 class="game-title">StandLeo</h2>
+                        <span class="game-version">Версия 0</span>
+                    </div>
+                    <div class="game-description">
+                        <p>Захватывающая игра в жанре платформер с уникальной механикой лазания по стенам. Исследуйте красочные миры, сражайтесь с врагами и решайте головоломки.</p>
+                    </div>
+                    <div class="game-details">
+                        <div><i class="fas fa-hdd"></i> 0 МБ</div>
+                        <div><i class="fas fa-calendar"></i> Обновлено: 0</div>
+                    </div>
+                    <a href="#" class="download-btn" onclick="downloadGame('StandLeo')">
+                        <i class="fas fa-download"></i> Скачать StandLeo
+                    </a>
+                </div>
+
+                <!-- StandLeo Lite -->
+                <div class="game-card">
+                    <div class="game-header">
+                        <i class="fas fa-cat standleo-lite-icon game-icon"></i>
+                        <h2 class="game-title">StandLeo Lite</h2>
+                        <span class="game-version">Версия 0</span>
+                    </div>
+                    <div class="game-description">
+                        <p>Облегченная версия StandLeo для слабых компьютеров. Сохраняет основной геймплей, но с упрощенной графикой и меньшими требованиями к системе.</p>
+                    </div>
+                    <div class="game-details">
+                        <div><i class="fas fa-hdd"></i> 0 МБ</div>
+                        <div><i class="fas fa-calendar"></i> Обновлено: 0</div>
+                    </div>
+                    <a href="#" class="download-btn" onclick="downloadGame('StandLeo Lite')">
+                        <i class="fas fa-download"></i> Скачать StandLeo Lite
+                    </a>
+                </div>
+
+                <!-- StandChillow -->
+                <div class="game-card">
+                    <div class="game-header">
+                        <i class="fas fa-couch standchillow-icon game-icon"></i>
+                        <h2 class="game-title">StandChillow</h2>
+                        <span class="game-version">Версия 0</span>
+                    </div>
+                    <div class="game-description">
+                        <p>Расслабляющая симуляция отдыха с элементами казуальной игры. Создавайте уютные пространства, обустраивайте дом и наслаждайтесь атмосферой спокойствия.</p>
+                    </div>
+                    <div class="game-details">
+                        <div><i class="fas fa-hdd"></i> 0 МБ</div>
+                        <div><i class="fas fa-calendar"></i> Обновлено: 20.09.2023</div>
+                    </div>
+                    <a href="#" class="download-btn" onclick="downloadGame('StandChillow')">
+                        <i class="fas fa-download"></i> Скачать StandChillow
+                    </a>
+                </div>
+
+                <!-- Project Evolution -->
+                <div class="game-card">
+                    <div class="game-header">
+                        <i class="fas fa-atom evolution-icon game-icon"></i>
+                        <h2 class="game-title">Project Evolution</h2>
+                        <span class="game-version">Версия 10.0.1</span>
+                    </div>
+                    <div class="game-description">
+                        <p>Стратегическая игра о развитии цивилизации от каменного века до будущего. Управляйте технологическим прогрессом, дипломатией и экономикой.</p>
+                    </div>
+                    <div class="game-details">
+                        <div><i class="fas fa-hdd"></i> 2 ГБ</div>
+                        <div><i class="fas fa-calendar"></i> Обновлено: 15.11.2023</div>
+                    </div>
+                    <a href="#" class="download-btn" onclick="downloadGame('Project Evolution')">
+                        <i class="fas fa-download"></i> Скачать Project Evolution
+                    </a>
+                </div>
+            </div>
+
+            <div class="instructions">
+                <h2>Как установить игры</h2>
+                <ol>
+                    <li>Нажмите на кнопку "Скачать" под выбранной игрой</li>
+                    <li>Дождитесь завершения загрузки архива с игрой</li>
+                    <li>Распакуйте архив с помощью программы WinRAR или 7-Zip</li>
+                    <li>Запустите файл setup.exe из распакованной папки</li>
+                    <li>Следуйте инструкциям установщика</li>
+                    <li>После завершения установки запустите игру с помощью созданного ярлыка</li>
+                </ol>
+                
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Важно:</strong> Перед установкой отключите антивирус, так как он может ошибочно определить игровые файлы как угрозу. Все файлы проверены и безопасны.
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Условия использования</a>
+                <a href="#">Техническая поддержка</a>
+            </div>
+            <p>&copy; 2023 GameDownloads. Все права защищены. Все игры являются собственностью их разработчиков.</p>
+            <p>Сайт предназначен только для ознакомительных целей.</p>
+        </footer>
+    </div>
+
+    <script>
+        function downloadGame(gameName) {
+            // В реальном проекте здесь был бы переход на страницу загрузки
+            // или прямая загрузка файла
+            alert(`Началась загрузка игры "${gameName}".\n\nВ реальной версии сайта здесь бы началась загрузка установочного файла.`);
+            
+            // Для демонстрации - имитация загрузки
+            const buttons = document.querySelectorAll('.download-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.includes(gameName)) {
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Загрузка...';
+                    btn.style.background = 'linear-gradient(90deg, #2d6a4f, #1b4332)';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = 'linear-gradient(90deg, #4361ee, #3a0ca3)';
+                        alert(`Игра "${gameName}" успешно загружена!`);
+                    }, 2000);
+                }
+            });
+            
+            return false;
+        }
+        
+        // Анимация карточек при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.game-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
