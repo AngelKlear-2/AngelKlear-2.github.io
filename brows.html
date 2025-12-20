@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna Browser</title>
+    <meta name="description" content="A simple and elegant browser with built-in search functionality">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#4F46E5",
+                        secondary: "#7C3AED",
+                        accent: "#10B981"
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌙</text></svg>">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans">
+    <div class="min-h-screen flex flex-col items-center justify-center px-4">
+        <!-- Header with Logo and Title -->
+        <header class="w-full max-w-4xl text-center mb-12">
+            <div class="flex flex-col items-center justify-center">
+                <!-- Logo Icon -->
+                <div class="w-32 h-32 mb-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-xl">
+                    <i class="fas fa-moon text-white text-5xl"></i>
+                </div>
+                
+                <!-- Browser Title -->
+                <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-2">Luna Browser</h1>
+                <p class="text-gray-600 text-lg md:text-xl max-w-md">A simple, elegant way to browse the web</p>
+            </div>
+        </header>
+
+        <!-- Main Search Section -->
+        <main class="w-full max-w-2xl">
+            <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
+                <!-- Search Form -->
+                <form id="searchForm" class="space-y-6">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Search the web or enter a URL..." 
+                            class="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-200 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all duration-200"
+                            autocomplete="off"
+                            autofocus
+                        >
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                            <button type="button" id="clearButton" class="text-gray-400 hover:text-gray-600 hidden">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Search Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button 
+                            type="submit" 
+                            class="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+                        >
+                            <i class="fas fa-search"></i>
+                            Search with Google
+                        </button>
+                        <button 
+                            type="button" 
+                            id="luckyButton"
+                            class="flex-1 bg-secondary hover:bg-secondary/90 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+                        >
+                            <i class="fas fa-star"></i>
+                            I'm Feeling Lucky
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Quick Links -->
+                <div class="mt-10 pt-8 border-t border-gray-100">
+                    <h3 class="text-gray-700 font-semibold mb-4 text-center">Quick Links</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <a href="javascript:void(0);" data-url="https://www.google.com" class="quick-link">
+                            <div class="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 text-center transition-all duration-200">
+                                <i class="fab fa-google text-primary text-xl mb-2"></i>
+                                <p class="text-sm font-medium text-gray-700">Google</p>
+                            </div>
+                        </a>
+                        <a href="javascript:void(0);" data-url="https://www.youtube.com" class="quick-link">
+                            <div class="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 text-center transition-all duration-200">
+                                <i class="fab fa-youtube text-red-600 text-xl mb-2"></i>
+                                <p class="text-sm font-medium text-gray-700">YouTube</p>
+                            </div>
+                        </a>
+                        <a href="javascript:void(0);" data-url="https://www.github.com" class="quick-link">
+                            <div class="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 text-center transition-all duration-200">
+                                <i class="fab fa-github text-gray-800 text-xl mb-2"></i>
+                                <p class="text-sm font-medium text-gray-700">GitHub</p>
+                            </div>
+                        </a>
+                        <a href="javascript:void(0);" data-url="https://www.wikipedia.org" class="quick-link">
+                            <div class="bg-gray-50 hover:bg-gray-100 rounded-lg p-4 text-center transition-all duration-200">
+                                <i class="fab fa-wikipedia-w text-gray-700 text-xl mb-2"></i>
+                                <p class="text-sm font-medium text-gray-700">Wikipedia</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recent Searches -->
+                <div id="recentSearches" class="mt-8 hidden">
+                    <h3 class="text-gray-700 font-semibold mb-3">Recent Searches</h3>
+                    <div id="recentList" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="mt-8 text-center text-gray-500 text-sm">
+                <p>Enter a search term or a URL (starting with http://, https://, or www.)</p>
+                <p class="mt-1">Press Enter to search or click the search button</p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <p>Luna Browser &copy; 2024 | A simple and elegant browsing experience</p>
+            <p class="mt-1">Privacy focused • No tracking • Fast browsing</p>
+        </footer>
+    </div>
+
+    <script>
+        // Define data at the beginning
+        const quickLinks = [
+            { "id": 1, "name": "Google", "url": "https://www.google.com", "icon": "fab fa-google", "color": "text-primary" },
+            { "id": 2, "name": "YouTube", "url": "https://www.youtube.com", "icon": "fab fa-youtube", "color": "text-red-600" },
+            { "id": 3, "name": "GitHub", "url": "https://www.github.com", "icon": "fab fa-github", "color": "text-gray-800" },
+            { "id": 4, "name": "Telegram", "url": "https://www.telegram.org", "icon": "fab fa-telegram", "color": "text-gray-700" }
+        ];
+
+        // DOM Elements
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const clearButton = document.getElementById('clearButton');
+        const luckyButton = document.getElementById('luckyButton');
+        const recentSearches = document.getElementById('recentSearches');
+        const recentList = document.getElementById('recentList');
+
+        // Recent searches storage
+        let recentSearchesData = JSON.parse(localStorage.getItem('lunaRecentSearches')) || [];
+
+        // Initialize the page
+        function init() {
+            updateClearButton();
+            loadRecentSearches();
+            setupQuickLinks();
+            
+            // Focus on search input
+            searchInput.focus();
+        }
+
+        // Update clear button visibility
+        function updateClearButton() {
+            if (searchInput.value.trim()) {
+                clearButton.classList.remove('hidden');
+            } else {
+                clearButton.classList.add('hidden');
+            }
+        }
+
+        // Setup quick links
+        function setupQuickLinks() {
+            const quickLinkElements = document.querySelectorAll('.quick-link');
+            quickLinkElements.forEach((link, index) => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('data-url');
+                    navigateToUrl(url);
+                });
+            });
+        }
+
+        // Check if input is a URL
+        function isUrl(input) {
+            const urlPatterns = [
+                /^https?:\/\//i,
+                /^www\./i,
+                /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/i
+            ];
+            
+            return urlPatterns.some(pattern => pattern.test(input.trim()));
+        }
+
+        // Format URL for navigation
+        function formatUrl(input) {
+            let url = input.trim();
+            
+            // Remove any leading/trailing spaces
+            url = url.trim();
+            
+            // If it starts with www, add https://
+            if (url.toLowerCase().startsWith('www.')) {
+                url = 'https://' + url;
+            }
+            
+            // If it doesn't start with http:// or https://, add https://
+            else if (!url.toLowerCase().startsWith('http://') && !url.toLowerCase().startsWith('https://')) {
+                url = 'https://' + url;
+            }
+            
+            return url;
+        }
+
+        // Navigate to URL
+        function navigateToUrl(url) {
+            // Add to recent searches
+            addToRecentSearches(url, 'url');
+            
+            // Navigate to the URL
+            window.location.href = url;
+        }
+
+        // Handle search
+        function handleSearch(query, isLucky = false) {
+            if (!query.trim()) return;
+            
+            let destination;
+            
+            if (isUrl(query)) {
+                // It's a URL
+                destination = formatUrl(query);
+                addToRecentSearches(query, 'url');
+            } else {
+                // It's a search query
+                if (isLucky) {
+                    // I'm Feeling Lucky - direct to first result
+                    destination = `https://www.google.com/search?q=${encodeURIComponent(query)}&btnI=I`;
+                } else {
+                    // Regular search
+                    destination = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                }
+                addToRecentSearches(query, 'search');
+            }
+            
+            // Navigate to destination
+            window.location.href = destination;
+        }
+
+        // Add to recent searches
+        function addToRecentSearches(term, type) {
+            const searchItem = {
+                id: Date.now(),
+                term: term,
+                type: type,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Add to beginning of array
+            recentSearchesData.unshift(searchItem);
+            
+            // Keep only last 5 items
+            if (recentSearchesData.length > 5) {
+                recentSearchesData = recentSearchesData.slice(0, 5);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('lunaRecentSearches', JSON.stringify(recentSearchesData));
+            
+            // Update UI
+            loadRecentSearches();
+        }
+
+        // Load recent searches
+        function loadRecentSearches() {
+            if (recentSearchesData.length === 0) {
+                recentSearches.classList.add('hidden');
+                return;
+            }
+            
+            recentSearches.classList.remove('hidden');
+            recentList.innerHTML = '';
+            
+            recentSearchesData.forEach(item => {
+                const searchElement = document.createElement('div');
+                searchElement.className = 'flex items-center justify-between bg-gray-50 hover:bg-gray-100 rounded-lg p-3 transition-all duration-200 cursor-pointer';
+                searchElement.addEventListener('click', () => {
+                    searchInput.value = item.term;
+                    handleSearch(item.term);
+                });
+                
+                const icon = item.type === 'url' ? 'fas fa-link' : 'fas fa-search';
+                const color = item.type === 'url' ? 'text-green-600' : 'text-primary';
+                
+                searchElement.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <i class="${icon} ${color}"></i>
+                        <span class="text-gray-700 truncate">${item.term}</span>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                `;
+                
+                recentList.appendChild(searchElement);
+            });
+        }
+
+        // Clear search input
+        function clearSearch() {
+            searchInput.value = '';
+            searchInput.focus();
+            updateClearButton();
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', updateClearButton);
+        
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSearch(this.value);
+            }
+        });
+        
+        clearButton.addEventListener('click', clearSearch);
+        
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleSearch(searchInput.value);
+        });
+        
+        luckyButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            handleSearch(searchInput.value, true);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }
+            
+            // Escape to clear search
+            if (e.key === 'Escape' && document.activeElement === searchInput) {
+                clearSearch();
+            }
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
