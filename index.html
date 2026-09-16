@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AngelKlear-2 | Portfolio</title>
+    <title>AngelKlear | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        :root {
-            --bg: #0d1117;
-            --card: #161b22;
-            --border: #30363d;
-            --text: #e6edf3;
-            --muted: #8b949e;
-            --accent: #58a6ff;
-            --accent2: #3fb950;
+        :root, [data-theme="dark"] {
+            --bg: #0a0a0f;
+            --bg2: #12121a;
+            --card: rgba(22, 22, 35, 0.75);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text: #f0f0f5;
+            --muted: #9a9ab0;
+            --accent: #7c9cff;
+            --accent-glow: rgba(124, 156, 255, 0.35);
+            --orb1: #5b6cff;
+            --orb2: #c44dff;
+            --orb3: #00d4aa;
+        }
+
+        [data-theme="light"] {
+            --bg: #f4f5f9;
+            --bg2: #ffffff;
+            --card: rgba(255, 255, 255, 0.8);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --text: #1a1a2e;
+            --muted: #5a5a72;
+            --accent: #3b5bdb;
+            --accent-glow: rgba(59, 91, 219, 0.25);
+            --orb1: #748ffc;
+            --orb2: #e599f7;
+            --orb3: #38d9a9;
         }
 
         * {
@@ -22,87 +40,300 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
+        /* ===== Animated 3D-like background ===== */
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.45;
+            animation: float 18s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        .orb-1 {
+            width: 420px;
+            height: 420px;
+            background: var(--orb1);
+            top: -10%;
+            left: -5%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--orb2);
+            top: 40%;
+            right: -8%;
+            animation-delay: -6s;
+            animation-duration: 22s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--orb3);
+            bottom: -5%;
+            left: 30%;
+            animation-delay: -12s;
+            animation-duration: 20s;
+        }
+
+        .orb-4 {
+            width: 200px;
+            height: 200px;
+            background: var(--orb1);
+            top: 60%;
+            left: 10%;
+            opacity: 0.25;
+            animation-delay: -3s;
+            animation-duration: 16s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -50px) scale(1.08); }
+            50% { transform: translate(-30px, 30px) scale(0.95); }
+            75% { transform: translate(50px, 20px) scale(1.05); }
+        }
+
+        /* Grid overlay for depth */
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+        }
+
+        [data-theme="light"] .grid-overlay {
+            background-image:
+                linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+        }
+
+        /* ===== Custom inverted cursor circle ===== */
+        .cursor-circle {
+            position: fixed;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            background: #ffffff;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, opacity 0.2s;
+            opacity: 0;
+        }
+
+        .cursor-circle.active {
+            opacity: 1;
+        }
+
+        .cursor-circle.hover-text {
+            width: 56px;
+            height: 56px;
+        }
+
+        /* Hide default cursor on desktop when custom is active */
+        @media (hover: hover) and (pointer: fine) {
+            body.custom-cursor {
+                cursor: none;
+            }
+            body.custom-cursor a,
+            body.custom-cursor button {
+                cursor: none;
+            }
+        }
+
+        /* ===== Main content ===== */
         .container {
-            max-width: 960px;
+            position: relative;
+            z-index: 1;
+            max-width: 980px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 48px 24px 60px;
         }
 
-        /* Header / Profile */
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--card-border);
+            background: var(--card);
+            backdrop-filter: blur(12px);
+            color: var(--text);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 24px var(--accent-glow);
+        }
+
+        /* Profile */
         .profile {
             display: flex;
             align-items: center;
-            gap: 24px;
-            margin-bottom: 48px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid var(--border);
+            gap: 28px;
+            margin-bottom: 52px;
+            padding: 28px;
+            background: var(--card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        .avatar-wrap {
+            position: relative;
+            flex-shrink: 0;
         }
 
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            border: 3px solid var(--border);
             object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .avatar-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, var(--orb1), var(--orb2), var(--orb3)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spin 8s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .profile-info h1 {
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 700;
-            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+            margin-bottom: 2px;
         }
 
         .username {
             color: var(--muted);
-            font-size: 1.1rem;
-            margin-bottom: 12px;
+            font-size: 1.05rem;
+            margin-bottom: 10px;
         }
 
         .bio {
-            color: var(--text);
-            margin-bottom: 12px;
-            max-width: 500px;
+            margin-bottom: 14px;
+            max-width: 480px;
+            line-height: 1.55;
         }
 
-        .location {
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        .meta-row span {
             display: flex;
             align-items: center;
             gap: 6px;
-            color: var(--muted);
-            font-size: 0.95rem;
         }
 
-        .location i {
+        .meta-row i {
             color: var(--accent);
         }
 
         .links {
-            margin-top: 16px;
             display: flex;
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .links a {
-            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            background: var(--bg2);
+            border: 1px solid var(--card-border);
+            color: var(--text);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
         }
 
         .links a:hover {
-            text-decoration: underline;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px var(--accent-glow);
         }
 
-        /* Section title */
+        .links a.tg {
+            background: linear-gradient(135deg, #2aabee, #229ed9);
+            border: none;
+            color: #fff;
+        }
+
+        .links a.tg:hover {
+            box-shadow: 0 4px 20px rgba(42, 171, 238, 0.4);
+        }
+
+        /* Section */
         .section-title {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 600;
             margin-bottom: 20px;
             display: flex;
@@ -114,7 +345,7 @@
             color: var(--accent);
         }
 
-        /* Repositories grid */
+        /* Repos */
         .repos {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -124,21 +355,23 @@
 
         .repo-card {
             background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
             padding: 20px;
-            transition: border-color 0.2s, transform 0.2s;
             display: flex;
             flex-direction: column;
+            transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
         }
 
         .repo-card:hover {
+            transform: translateY(-4px) scale(1.01);
             border-color: var(--accent);
-            transform: translateY(-2px);
+            box-shadow: 0 12px 28px var(--accent-glow);
         }
 
         .repo-name {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--accent);
             text-decoration: none;
@@ -154,33 +387,33 @@
             font-size: 0.9rem;
             flex-grow: 1;
             margin-bottom: 12px;
+            line-height: 1.45;
         }
 
         .repo-meta {
             display: flex;
-            gap: 16px;
-            font-size: 0.85rem;
+            gap: 14px;
+            font-size: 0.82rem;
             color: var(--muted);
         }
 
         .repo-meta span {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
         }
 
         .lang-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            display: inline-block;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding-top: 32px;
-            border-top: 1px solid var(--border);
+            padding-top: 28px;
+            border-top: 1px solid var(--card-border);
             color: var(--muted);
             font-size: 0.9rem;
         }
@@ -190,40 +423,71 @@
             text-decoration: none;
         }
 
+        footer a:hover {
+            text-decoration: underline;
+        }
+
         /* Responsive */
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
             .profile {
                 flex-direction: column;
                 text-align: center;
+                padding: 24px 20px;
             }
 
-            .location, .links {
+            .meta-row, .links {
                 justify-content: center;
             }
 
             .avatar {
-                width: 100px;
-                height: 100px;
+                width: 110px;
+                height: 110px;
+            }
+
+            .cursor-circle {
+                display: none;
             }
         }
     </style>
 </head>
-<body>
+<body class="custom-cursor">
+    <!-- Animated background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+    <div class="grid-overlay"></div>
+
+    <!-- Custom cursor -->
+    <div class="cursor-circle" id="cursorCircle"></div>
+
+    <!-- Theme toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light theme">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
     <div class="container">
         <!-- Profile -->
         <div class="profile">
-            <img src="https://avatars.githubusercontent.com/u/243588288?v=4" alt="Avatar" class="avatar">
+            <div class="avatar-wrap">
+                <div class="avatar-ring"></div>
+                <img src="https://avatars.githubusercontent.com/u/243588288?v=4" alt="Avatar" class="avatar">
+            </div>
             <div class="profile-info">
                 <h1>AngelKlear</h1>
                 <div class="username">@AngelKlear-2</div>
                 <p class="bio">Developer. Building bots, tools and Minecraft-related projects.</p>
-                <div class="location">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Russia</span>
+                <div class="meta-row">
+                    <span><i class="fas fa-map-marker-alt"></i> Russia</span>
                 </div>
                 <div class="links">
-                    <a href="https://github.com/AngelKlear-2" target="_blank">
+                    <a href="https://github.com/AngelKlear-2" target="_blank" rel="noopener">
                         <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://t.me/AngelKlear" target="_blank" rel="noopener" class="tg">
+                        <i class="fab fa-telegram-plane"></i> @AngelKlear
                     </a>
                 </div>
             </div>
@@ -235,113 +499,125 @@
         </h2>
 
         <div class="repos">
-            <!-- telegram-ai-chat-automation -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/telegram-ai-chat-automation" target="_blank">
-                    telegram-ai-chat-automation
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/telegram-ai-chat-automation" target="_blank" rel="noopener">telegram-ai-chat-automation</a>
                 <p class="repo-desc">Telegram Business bot that replies on your behalf using AI (OpenAI-compatible APIs like Groq).</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#3572A5"></span> Python</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#3572A5"></span> Python</span></div>
             </div>
 
-            <!-- mabfa -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/mabfa" target="_blank">
-                    mabfa
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/mabfa" target="_blank" rel="noopener">mabfa</a>
                 <p class="repo-desc">MABFA (Minecraft AFK Bot For Aternos)</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#f1e05a"></span> JavaScript</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#f1e05a"></span> JavaScript</span></div>
             </div>
 
-            <!-- akprotocol -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/akprotocol" target="_blank">
-                    akprotocol
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/akprotocol" target="_blank" rel="noopener">akprotocol</a>
                 <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#8b949e"></span> —</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#8b949e"></span> —</span></div>
             </div>
 
-            <!-- akfreedom -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/akfreedom" target="_blank">
-                    akfreedom
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/akfreedom" target="_blank" rel="noopener">akfreedom</a>
                 <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#8b949e"></span> —</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#8b949e"></span> —</span></div>
             </div>
 
-            <!-- buildpicks-source -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/buildpicks-source" target="_blank">
-                    buildpicks-source
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/buildpicks-source" target="_blank" rel="noopener">buildpicks-source</a>
                 <p class="repo-desc">Emerald Pickaxe mod + Vein Miner and Auto Smelt enchantments for Minecraft.</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#b07219"></span> Java</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#b07219"></span> Java</span></div>
             </div>
 
-            <!-- playmate_source -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/playmate_source" target="_blank">
-                    playmate_source
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/playmate_source" target="_blank" rel="noopener">playmate_source</a>
                 <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#b07219"></span> Java</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#b07219"></span> Java</span></div>
             </div>
 
-            <!-- the-formless-mod -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/the-formless-mod" target="_blank">
-                    the-formless-mod
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/the-formless-mod" target="_blank" rel="noopener">the-formless-mod</a>
                 <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#e34c26"></span> HTML</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#e34c26"></span> HTML</span></div>
             </div>
 
-            <!-- SC-2.05-DLL -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/SC-2.05-DLL" target="_blank">
-                    SC-2.05-DLL
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/SC-2.05-DLL" target="_blank" rel="noopener">SC-2.05-DLL</a>
                 <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#8b949e"></span> —</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#8b949e"></span> —</span></div>
             </div>
 
-            <!-- ollama_api_test -->
             <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/ollama_api_test" target="_blank">
-                    ollama_api_test
-                </a>
+                <a class="repo-name" href="https://github.com/AngelKlear-2/ollama_api_test" target="_blank" rel="noopener">ollama_api_test</a>
                 <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta">
-                    <span><span class="lang-dot" style="background:#8b949e"></span> —</span>
-                </div>
+                <div class="repo-meta"><span><span class="lang-dot" style="background:#8b949e"></span> —</span></div>
             </div>
         </div>
 
         <footer>
-            <p>
-                Built with GitHub Pages · 
-                <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io" target="_blank">Source</a>
-            </p>
+            <p>Built with GitHub Pages · <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io" target="_blank" rel="noopener">Source</a></p>
             <p style="margin-top: 8px;">Based in Russia</p>
         </footer>
     </div>
+
+    <script>
+        // ===== Theme toggle =====
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Load saved theme or prefer dark
+        const saved = localStorage.getItem('theme') || 'dark';
+        setTheme(saved);
+
+        themeToggle.addEventListener('click', () => {
+            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            setTheme(next);
+        });
+
+        // ===== Custom inverted cursor circle =====
+        const circle = document.getElementById('cursorCircle');
+        let mouseX = 0, mouseY = 0;
+        let circleX = 0, circleY = 0;
+
+        // Only on devices with fine pointer (mouse)
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                circle.classList.add('active');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                circle.classList.remove('active');
+            });
+
+            // Smooth follow
+            function animateCursor() {
+                circleX += (mouseX - circleX) * 0.18;
+                circleY += (mouseY - circleY) * 0.18;
+                circle.style.left = circleX + 'px';
+                circle.style.top = circleY + 'px';
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Enlarge when near / over text & interactive elements
+            const hoverTargets = 'h1, h2, p, a, .bio, .username, .repo-desc, .repo-name, .section-title, .meta-row span';
+
+            document.querySelectorAll(hoverTargets).forEach(el => {
+                el.addEventListener('mouseenter', () => circle.classList.add('hover-text'));
+                el.addEventListener('mouseleave', () => circle.classList.remove('hover-text'));
+            });
+        } else {
+            document.body.classList.remove('custom-cursor');
+        }
+    </script>
 </body>
 </html>
