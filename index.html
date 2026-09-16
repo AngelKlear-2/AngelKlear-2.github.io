@@ -1,438 +1,347 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKdownloader - Standoff 2 Private Server</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>AngelKlear-2 | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* Общие стили */
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --border: #30363d;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
             min-height: 100vh;
-            padding-bottom: 40px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 40px 20px;
         }
 
-        /* Шапка */
-        header {
-            padding: 30px 0;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 40px;
-        }
-
-        .logo {
+        /* Header / Profile */
+        .profile {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 24px;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .logo-icon {
-            color: #ff4655;
-            font-size: 2.5rem;
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--border);
+            object-fit: cover;
         }
 
-        h1 {
-            font-size: 2.8rem;
-            background: linear-gradient(90deg, #ff4655, #ff8a00);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 1px;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: #aaa;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        /* Основной контент */
-        .intro {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .intro h2 {
+        .profile-info h1 {
             font-size: 2rem;
-            margin-bottom: 15px;
-            color: #ff8a00;
+            font-weight: 700;
+            margin-bottom: 4px;
         }
 
-        .intro p {
+        .username {
+            color: var(--muted);
             font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto 25px;
-            line-height: 1.6;
-            color: #ddd;
+            margin-bottom: 12px;
         }
 
-        .warning {
-            background-color: rgba(255, 70, 85, 0.1);
-            border-left: 4px solid #ff4655;
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: left;
+        .bio {
+            color: var(--text);
+            margin-bottom: 12px;
+            max-width: 500px;
         }
 
-        .warning h3 {
-            color: #ff4655;
-            margin-bottom: 8px;
-            font-size: 1.2rem;
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 0.95rem;
         }
 
-        /* Карточки загрузок */
-        .downloads-container {
+        .location i {
+            color: var(--accent);
+        }
+
+        .links {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Section title */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        /* Repositories grid */
+        .repos {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
+            gap: 16px;
+            margin-bottom: 48px;
         }
 
-        .download-card {
-            background: rgba(20, 20, 40, 0.7);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .repo-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: border-color 0.2s, transform 0.2s;
             display: flex;
             flex-direction: column;
         }
 
-        .download-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 70, 85, 0.3);
+        .repo-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
         }
 
-        .card-header {
+        .repo-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            margin-bottom: 8px;
+        }
+
+        .repo-name:hover {
+            text-decoration: underline;
+        }
+
+        .repo-desc {
+            color: var(--muted);
+            font-size: 0.9rem;
+            flex-grow: 1;
+            margin-bottom: 12px;
+        }
+
+        .repo-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .repo-meta span {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            gap: 4px;
         }
 
-        .card-icon {
-            font-size: 2.2rem;
-            margin-right: 15px;
-            color: #ff4655;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .card-details {
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-
-        .card-details p {
-            color: #bbb;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .version {
-            color: #ff8a00 !important;
-            font-weight: 600;
-        }
-
-        .size {
-            color: #4dabf7 !important;
-            font-weight: 600;
-        }
-
-        .download-btn {
-            display: block;
-            background: linear-gradient(90deg, #ff4655, #ff8a00);
-            color: white;
-            text-align: center;
-            padding: 14px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            margin-top: auto;
-            letter-spacing: 0.5px;
-        }
-
-        .download-btn:hover {
-            background: linear-gradient(90deg, #ff2e3f, #ff7700);
-            box-shadow: 0 5px 15px rgba(255, 70, 85, 0.4);
-        }
-
-        .download-btn i {
-            margin-right: 10px;
-        }
-
-        /* Инструкция */
-        .instructions {
-            background: rgba(30, 30, 60, 0.7);
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 40px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .instructions h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #ff8a00;
-            text-align: center;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .step {
-            background: rgba(40, 40, 70, 0.5);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .step-number {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            background: #ff4655;
+        .lang-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            line-height: 36px;
-            font-weight: 700;
-            margin-bottom: 15px;
+            display: inline-block;
         }
 
-        .step h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .step p {
-            color: #bbb;
-            font-size: 0.95rem;
-        }
-
-        /* Подвал */
+        /* Footer */
         footer {
             text-align: center;
-            margin-top: 50px;
-            color: #888;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
             font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 30px;
         }
 
-        .disclaimer {
-            max-width: 800px;
-            margin: 0 auto 20px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #aaa;
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
         }
 
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
+        /* Responsive */
+        @media (max-width: 600px) {
+            .profile {
+                flex-direction: column;
+                text-align: center;
             }
-            
-            .downloads-container {
-                grid-template-columns: 1fr;
-                max-width: 500px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            
-            .steps {
-                grid-template-columns: 1fr;
-            }
-        }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
+            .location, .links {
+                justify-content: center;
             }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .download-card {
-                padding: 20px;
+
+            .avatar {
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-gamepad logo-icon"></i>
-                <h1>AKdownloader</h1>
+        <!-- Profile -->
+        <div class="profile">
+            <img src="https://avatars.githubusercontent.com/u/243588288?v=4" alt="Avatar" class="avatar">
+            <div class="profile-info">
+                <h1>AngelKlear</h1>
+                <div class="username">@AngelKlear-2</div>
+                <p class="bio">Developer. Building bots, tools and Minecraft-related projects.</p>
+                <div class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Russia</span>
+                </div>
+                <div class="links">
+                    <a href="https://github.com/AngelKlear-2" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
             </div>
-            <p class="subtitle">Скачивайте приватные сервера Standoff 2 для Android. Получите доступ к уникальным возможностям, скинам и режимам игры!</p>
-        </header>
+        </div>
 
-        <main>
-            <section class="intro">
-                <h2>Приватные сервера Standoff 2</h2>
-                <p>Выберите один из доступных приватных серверов Standoff 2. Каждый сервер предлагает уникальные функции, скины и игровые режимы, недоступные в официальной версии игры.</p>
-                
-            </section>
+        <!-- Repositories -->
+        <h2 class="section-title">
+            <i class="fas fa-code-branch"></i> Public Repositories
+        </h2>
 
-            <section class="downloads-container">
-                <div class="download-card">
-                    <div class="card-header">
-                        <i class="fas fa-bolt card-icon"></i>
-                        <div class="card-title">Project Evolution</div>
-                    </div>
-                    <div class="card-details">
-                        <p>Приватка номер 1</p>
-                        <p class="version">Версия: 10.0.1</p>
-                        <p class="size">Размер: 2 ГБ</p>
-                        <p>ТГК: @project_evolution</p>
-                    </div>
-                    <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/PE/ProjectEvolution.10.0.1.f1.apk" class="download-btn">
-                        <i class="fas fa-download"></i> Скачать
-                    </a>
+        <div class="repos">
+            <!-- telegram-ai-chat-automation -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/telegram-ai-chat-automation" target="_blank">
+                    telegram-ai-chat-automation
+                </a>
+                <p class="repo-desc">Telegram Business bot that replies on your behalf using AI (OpenAI-compatible APIs like Groq).</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#3572A5"></span> Python</span>
                 </div>
+            </div>
 
-                <div class="download-card">
-                    <div class="card-header">
-                        <i class="fas fa-crown card-icon"></i>
-                        <div class="card-title">StandLeo Lite</div>
-                    </div>
-                    <div class="card-details">
-                        <p>Приватка номер 2</p>
-                        <p class="version">Версия: 1.0</p>
-                        <p class="size">Размер: 501 МБ</p>
-                        <p>ТГК: @th3le0tg</p>
-                    </div>
-                    <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/SLL/" class="download-btn">
-                        <i class="fas fa-download"></i> Скачать
-                    </a>
+            <!-- mabfa -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/mabfa" target="_blank">
+                    mabfa
+                </a>
+                <p class="repo-desc">MABFA (Minecraft AFK Bot For Aternos)</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#f1e05a"></span> JavaScript</span>
                 </div>
+            </div>
 
-                <div class="download-card">
-                    <div class="card-header">
-                        <i class="fas fa-fire card-icon"></i>
-                        <div class="card-title">StandLeo</div>
-                    </div>
-                    <div class="card-details">
-                        <p>Приватка номер 3</p>
-                        <p class="version">Версия: 3.2</p>
-                        <p class="size">Размер: 1,8 ГБ</p>
-                        <p>ТГК: @th3le0tg</p>
-                    </div>
-                    <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/s/standleoapk.apk" class="download-btn">
-                        <i class="fas fa-download"></i> Скачать
-                    </a>
+            <!-- akprotocol -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/akprotocol" target="_blank">
+                    akprotocol
+                </a>
+                <p class="repo-desc">No description provided.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#8b949e"></span> —</span>
                 </div>
+            </div>
 
-                <div class="download-card">
-                    <div class="card-header">
-                        <i class="fas fa-snowflake card-icon"></i>
-                        <div class="card-title">StandChillow</div>
-                    </div>
-                    <div class="card-details">
-                        <p>Приватка номер 4</p>
-                        <p class="version">Версия: 2.0 OBT F2</p>
-                        <p class="size">Размер: 2 ГБ</p>
-                        <p>ТГК: @chillow</p>
-                    </div>
-                    <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io/releases/download/SC/" class="download-btn">
-                        <i class="fas fa-download"></i> Скачать
-                    </a>
+            <!-- akfreedom -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/akfreedom" target="_blank">
+                    akfreedom
+                </a>
+                <p class="repo-desc">No description provided.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#8b949e"></span> —</span>
                 </div>
-            </section>
+            </div>
 
-            <section class="instructions">
-                <h2>Как установить приватный сервер</h2>
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <h3>Скачайте APK файл</h3>
-                        <p>Нажмите на кнопку скачивания для выбранного приватного сервера</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <h3>Разрешите установку</h3>
-                        <p>В настройках Android разрешите установку приложений из неизвестных источников</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <h3>Установите приложение</h3>
-                        <p>Запустите скачанный APK файл и установите приватный сервер</p>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <h3>Наслаждайтесь игрой</h3>
-                        <p>Запустите приватный сервер и войдите в свой аккаунт</p>
-                    </div>
+            <!-- buildpicks-source -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/buildpicks-source" target="_blank">
+                    buildpicks-source
+                </a>
+                <p class="repo-desc">Emerald Pickaxe mod + Vein Miner and Auto Smelt enchantments for Minecraft.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#b07219"></span> Java</span>
                 </div>
-            </section>
-        </main>
+            </div>
+
+            <!-- playmate_source -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/playmate_source" target="_blank">
+                    playmate_source
+                </a>
+                <p class="repo-desc">No description provided.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#b07219"></span> Java</span>
+                </div>
+            </div>
+
+            <!-- the-formless-mod -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/the-formless-mod" target="_blank">
+                    the-formless-mod
+                </a>
+                <p class="repo-desc">No description provided.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#e34c26"></span> HTML</span>
+                </div>
+            </div>
+
+            <!-- SC-2.05-DLL -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/SC-2.05-DLL" target="_blank">
+                    SC-2.05-DLL
+                </a>
+                <p class="repo-desc">No description provided.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#8b949e"></span> —</span>
+                </div>
+            </div>
+
+            <!-- ollama_api_test -->
+            <div class="repo-card">
+                <a class="repo-name" href="https://github.com/AngelKlear-2/ollama_api_test" target="_blank">
+                    ollama_api_test
+                </a>
+                <p class="repo-desc">No description provided.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot" style="background:#8b949e"></span> —</span>
+                </div>
+            </div>
+        </div>
 
         <footer>
-            <div class="disclaimer">
-                <p><i class="fas fa-info-circle"></i> Внимание: Этот сайт не связан с официальными разработчиками Standoff 2. Все файлы предоставляются "как есть". Автор сайта не несет ответственности за возможные проблемы с аккаунтом или устройством.</p>
-            </div>
-            <p>AKdownloader &copy; 2023 | Standoff 2 Private Servers</p>
+            <p>
+                Built with GitHub Pages · 
+                <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io" target="_blank">Source</a>
+            </p>
+            <p style="margin-top: 8px;">Based in Russia</p>
         </footer>
     </div>
-
-    <script>
-        // Простая анимация при наведении на кнопки
-        document.addEventListener('DOMContentLoaded', function() {
-            const downloadButtons = document.querySelectorAll('.download-btn');
-            
-            downloadButtons.forEach(button => {
-                button.addEventListener('mouseenter', function() {
-                    this.style.transform = 'scale(1.03)';
-                });
-                
-                button.addEventListener('mouseleave', function() {
-                    this.style.transform = 'scale(1)';
-                });
-            });
-            
-            // Добавляем счетчик кликов на кнопки
-            downloadButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    const serverName = this.closest('.download-card').querySelector('.card-title').textContent;
-                    console.log(`Скачивание начато: ${serverName}`);
-                    // Здесь можно добавить аналитику
-                });
-            });
-        });
-    </script>
 </body>
 </html>
