@@ -1,37 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AngelKlear | Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Portfolio | Developer from Russia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root, [data-theme="dark"] {
-            --bg: #0a0a0f;
-            --bg2: #12121a;
-            --card: rgba(22, 22, 35, 0.75);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text: #f0f0f5;
-            --muted: #9a9ab0;
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             --accent: #7c9cff;
-            --accent-glow: rgba(124, 156, 255, 0.35);
-            --orb1: #5b6cff;
-            --orb2: #c44dff;
-            --orb3: #00d4aa;
+            --accent-glow: rgba(124, 156, 255, 0.4);
+            --text: #f0f4ff;
+            --text-muted: rgba(240, 244, 255, 0.7);
+            --body-bg: #0a0a12;
+            --card-hover: rgba(255, 255, 255, 0.12);
         }
 
-        [data-theme="light"] {
-            --bg: #f4f5f9;
-            --bg2: #ffffff;
-            --card: rgba(255, 255, 255, 0.8);
-            --card-border: rgba(0, 0, 0, 0.08);
-            --text: #1a1a2e;
-            --muted: #5a5a72;
-            --accent: #3b5bdb;
-            --accent-glow: rgba(59, 91, 219, 0.25);
-            --orb1: #748ffc;
-            --orb2: #e599f7;
-            --orb3: #38d9a9;
+        body.theme-light {
+            --glass-bg: rgba(255, 255, 255, 0.55);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --accent: #4f46e5;
+            --accent-glow: rgba(79, 70, 229, 0.25);
+            --text: #1e1b4b;
+            --text-muted: rgba(30, 27, 75, 0.7);
+            --body-bg: #f0f4ff;
+            --card-hover: rgba(255, 255, 255, 0.8);
         }
 
         * {
@@ -40,13 +38,9 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--body-bg);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
@@ -54,367 +48,378 @@
             transition: background 0.4s ease, color 0.4s ease;
         }
 
-        /* ===== Animated 3D-like background ===== */
-        .bg-animation {
+        #bg-canvas {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 0;
-            overflow: hidden;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        body.bg-none #bg-canvas,
+        body.bg-none .orb {
+            opacity: 0;
             pointer-events: none;
         }
 
         .orb {
-            position: absolute;
+            position: fixed;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.45;
-            animation: float 18s ease-in-out infinite;
-            will-change: transform;
+            opacity: 0.5;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+            transition: opacity 0.5s ease;
         }
 
         .orb-1 {
-            width: 420px;
-            height: 420px;
-            background: var(--orb1);
-            top: -10%;
-            left: -5%;
-            animation-delay: 0s;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #4a6cf7, transparent 70%);
+            top: -150px;
+            left: -100px;
         }
 
         .orb-2 {
-            width: 350px;
-            height: 350px;
-            background: var(--orb2);
-            top: 40%;
-            right: -8%;
-            animation-delay: -6s;
-            animation-duration: 22s;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #a855f7, transparent 70%);
+            bottom: -100px;
+            right: -80px;
+            animation-delay: -7s;
         }
 
         .orb-3 {
-            width: 300px;
-            height: 300px;
-            background: var(--orb3);
-            bottom: -5%;
-            left: 30%;
-            animation-delay: -12s;
-            animation-duration: 20s;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, #06b6d4, transparent 70%);
+            top: 40%;
+            left: 60%;
+            animation-delay: -14s;
         }
 
-        .orb-4 {
-            width: 200px;
-            height: 200px;
-            background: var(--orb1);
-            top: 60%;
-            left: 10%;
-            opacity: 0.25;
-            animation-delay: -3s;
-            animation-duration: 16s;
-        }
+        body.theme-light .orb-1 { background: radial-gradient(circle, #818cf8, transparent 70%); opacity: 0.35; }
+        body.theme-light .orb-2 { background: radial-gradient(circle, #c084fc, transparent 70%); opacity: 0.3; }
+        body.theme-light .orb-3 { background: radial-gradient(circle, #22d3ee, transparent 70%); opacity: 0.3; }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(40px, -50px) scale(1.08); }
-            50% { transform: translate(-30px, 30px) scale(0.95); }
-            75% { transform: translate(50px, 20px) scale(1.05); }
+            33% { transform: translate(40px, -30px) scale(1.05); }
+            66% { transform: translate(-30px, 20px) scale(0.95); }
         }
 
-        /* Grid overlay for depth */
-        .grid-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-        }
-
-        [data-theme="light"] .grid-overlay {
-            background-image:
-                linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
-        }
-
-        /* ===== Custom inverted cursor circle ===== */
-        .cursor-circle {
-            position: fixed;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            background: #ffffff;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, opacity 0.2s;
-            opacity: 0;
-        }
-
-        .cursor-circle.active {
-            opacity: 1;
-        }
-
-        .cursor-circle.hover-text {
-            width: 56px;
-            height: 56px;
-        }
-
-        /* Hide default cursor on desktop when custom is active */
-        @media (hover: hover) and (pointer: fine) {
-            body.custom-cursor {
-                cursor: none;
-            }
-            body.custom-cursor a,
-            body.custom-cursor button {
-                cursor: none;
-            }
-        }
-
-        /* ===== Main content ===== */
         .container {
             position: relative;
             z-index: 1;
-            max-width: 980px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 48px 24px 60px;
+            padding: 40px 24px 80px;
         }
 
-        /* Theme toggle */
-        .theme-toggle {
+        .controls {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 24px;
+            right: 24px;
             z-index: 100;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: 1px solid var(--card-border);
-            background: var(--card);
-            backdrop-filter: blur(12px);
-            color: var(--text);
-            font-size: 1.2rem;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.08);
-            box-shadow: 0 6px 24px var(--accent-glow);
-        }
-
-        /* Profile */
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            margin-bottom: 52px;
-            padding: 28px;
-            background: var(--card);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        }
-
-        .avatar-wrap {
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .avatar {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--accent);
-            box-shadow: 0 0 24px var(--accent-glow);
-        }
-
-        .avatar-ring {
-            position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            background: linear-gradient(135deg, var(--orb1), var(--orb2), var(--orb3)) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: spin 8s linear infinite;
-            opacity: 0.7;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .profile-info h1 {
-            font-size: 2.1rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 2px;
-        }
-
-        .username {
-            color: var(--muted);
-            font-size: 1.05rem;
-            margin-bottom: 10px;
-        }
-
-        .bio {
-            margin-bottom: 14px;
-            max-width: 480px;
-            line-height: 1.55;
-        }
-
-        .meta-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 16px;
-            font-size: 0.95rem;
-            color: var(--muted);
-        }
-
-        .meta-row span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .meta-row i {
-            color: var(--accent);
-        }
-
-        .links {
-            display: flex;
-            flex-wrap: wrap;
             gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
-        .links a {
+        .control-group {
+            display: flex;
+            gap: 4px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .ctrl-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 7px 14px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .ctrl-btn.active {
+            background: rgba(124, 156, 255, 0.25);
+            color: var(--text);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        body.theme-light .ctrl-btn.active {
+            background: rgba(79, 70, 229, 0.18);
+        }
+
+        .ctrl-btn:hover:not(.active) {
+            color: var(--text);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+            animation: fadeUp 1s ease-out;
+        }
+
+        .hero-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px;
-            border-radius: 10px;
-            background: var(--bg2);
-            border: 1px solid var(--card-border);
-            color: var(--text);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 8px 18px;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
         }
 
-        .links a:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px var(--accent-glow);
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #22c55e;
+            animation: pulse 2s infinite;
         }
 
-        .links a.tg {
-            background: linear-gradient(135deg, #2aabee, #229ed9);
-            border: none;
-            color: #fff;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
-        .links a.tg:hover {
-            box-shadow: 0 4px 20px rgba(42, 171, 238, 0.4);
-        }
-
-        /* Section */
-        .section-title {
-            font-size: 1.35rem;
-            font-weight: 600;
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 3.8rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
             margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text) 0%, #a5b4fc 50%, #c4b5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.theme-light .hero h1 {
+            background: linear-gradient(135deg, #1e1b4b 0%, #4f46e5 60%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto 36px;
+            line-height: 1.6;
+        }
+
+        .hero-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 4px 24px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+        }
+
+        .btn-glass:hover {
+            background: var(--card-hover);
+            transform: translateY(-3px);
+        }
+
+        .section {
+            margin-top: 80px;
+            animation: fadeUp 1s ease-out 0.2s both;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .section-sub {
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            font-size: 1rem;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        body.theme-light .card::before {
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.08), transparent);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(124, 156, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 0 40px var(--accent-glow);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.theme-light .card-icon {
+            background: rgba(79, 70, 229, 0.08);
+            border-color: rgba(79, 70, 229, 0.15);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(124, 156, 255, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(124, 156, 255, 0.25);
+        }
+
+        body.theme-light .tag {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+            border-color: rgba(79, 70, 229, 0.2);
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+
+        .card-link:hover {
             gap: 10px;
         }
 
-        .section-title i {
-            color: var(--accent);
+        .about-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: var(--glass-shadow);
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        /* Repos */
-        .repos {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-            margin-bottom: 48px;
-        }
-
-        .repo-card {
-            background: var(--card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
-        }
-
-        .repo-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: var(--accent);
-            box-shadow: 0 12px 28px var(--accent-glow);
-        }
-
-        .repo-name {
+        .about-panel p {
+            color: var(--text-muted);
+            line-height: 1.7;
             font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--accent);
-            text-decoration: none;
-            margin-bottom: 8px;
         }
 
-        .repo-name:hover {
-            text-decoration: underline;
-        }
-
-        .repo-desc {
-            color: var(--muted);
-            font-size: 0.9rem;
-            flex-grow: 1;
-            margin-bottom: 12px;
-            line-height: 1.45;
-        }
-
-        .repo-meta {
-            display: flex;
-            gap: 14px;
-            font-size: 0.82rem;
-            color: var(--muted);
-        }
-
-        .repo-meta span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .lang-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        /* Footer */
         footer {
             text-align: center;
-            padding-top: 28px;
-            border-top: 1px solid var(--card-border);
-            color: var(--muted);
+            padding: 60px 0 20px;
+            color: var(--text-muted);
             font-size: 0.9rem;
         }
 
@@ -423,201 +428,296 @@
             text-decoration: none;
         }
 
-        footer a:hover {
-            text-decoration: underline;
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
-        @media (max-width: 640px) {
-            .profile {
-                flex-direction: column;
-                text-align: center;
-                padding: 24px 20px;
-            }
+        @media (max-width: 600px) {
+            .hero { padding: 60px 0 40px; }
+            .controls { top: 12px; right: 12px; }
+            .about-panel { padding: 28px 20px; }
+            .ctrl-btn { padding: 6px 10px; font-size: 12px; }
+        }
 
-            .meta-row, .links {
-                justify-content: center;
-            }
-
-            .avatar {
-                width: 110px;
-                height: 110px;
-            }
-
-            .cursor-circle {
-                display: none;
-            }
+        [data-lang="ru"] { display: none; }
+        body.lang-ru [data-lang="en"] { display: none; }
+        body.lang-ru [data-lang="ru"] { display: block; }
+        body.lang-ru .hero p[data-lang="ru"],
+        body.lang-ru .section-sub[data-lang="ru"],
+        body.lang-ru .card p[data-lang="ru"],
+        body.lang-ru .about-panel p[data-lang="ru"] {
+            display: block;
         }
     </style>
 </head>
-<body class="custom-cursor">
-    <!-- Animated background -->
-    <div class="bg-animation">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="orb orb-4"></div>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="controls">
+        <div class="control-group">
+            <button class="ctrl-btn active" data-set-lang="en">EN</button>
+            <button class="ctrl-btn" data-set-lang="ru">RU</button>
+        </div>
+        <div class="control-group">
+            <button class="ctrl-btn active" data-theme="dark">Dark</button>
+            <button class="ctrl-btn" data-theme="light">Light</button>
+        </div>
+        <div class="control-group">
+            <button class="ctrl-btn active" data-bg="particles">3D</button>
+            <button class="ctrl-btn" data-bg="orbs">Orbs</button>
+            <button class="ctrl-btn" data-bg="none">None</button>
+        </div>
     </div>
-    <div class="grid-overlay"></div>
-
-    <!-- Custom cursor -->
-    <div class="cursor-circle" id="cursorCircle"></div>
-
-    <!-- Theme toggle -->
-    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light theme">
-        <i class="fas fa-moon" id="themeIcon"></i>
-    </button>
 
     <div class="container">
-        <!-- Profile -->
-        <div class="profile">
-            <div class="avatar-wrap">
-                <div class="avatar-ring"></div>
-                <img src="https://avatars.githubusercontent.com/u/243588288?v=4" alt="Avatar" class="avatar">
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                <span data-lang="en">Available for projects</span>
+                <span data-lang="ru">Открыт к проектам</span>
             </div>
-            <div class="profile-info">
-                <h1>AngelKlear</h1>
-                <div class="username">@AngelKlear-2</div>
-                <p class="bio">Developer. Building bots, tools and Minecraft-related projects.</p>
-                <div class="meta-row">
-                    <span><i class="fas fa-map-marker-alt"></i> Russia</span>
+            <h1 data-lang="en">Developer from Russia</h1>
+            <h1 data-lang="ru">Разработчик из России</h1>
+            <p data-lang="en">
+                Building smart automation tools, Minecraft mods and bots. 
+                Focused on clean code, useful features and open-source projects.
+            </p>
+            <p data-lang="ru">
+                Создаю умные инструменты автоматизации, моды и боты для Minecraft. 
+                Делаю чистый код, полезные фичи и open-source проекты.
+            </p>
+            <div class="hero-links">
+                <a href="https://github.com/AngelKlear-2" target="_blank" class="btn btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
+                <a href="#projects" class="btn btn-glass">
+                    <span data-lang="en">View Projects</span>
+                    <span data-lang="ru">Смотреть проекты</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="about-panel">
+                <h2 class="section-title" data-lang="en">About</h2>
+                <h2 class="section-title" data-lang="ru">Обо мне</h2>
+                <p data-lang="en">
+                    Passionate developer based in Russia. I love creating practical tools that make life easier — 
+                    from AI-powered Telegram bots to Minecraft quality-of-life mods and AFK helpers. 
+                    Everything is open-source and built with care.
+                </p>
+                <p data-lang="ru">
+                    Увлечённый разработчик из России. Люблю создавать практичные инструменты, которые упрощают жизнь — 
+                    от Telegram-ботов с ИИ до удобных модов для Minecraft и AFK-ботов. 
+                    Всё open-source и сделано с душой.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="projects">
+            <h2 class="section-title" data-lang="en">Featured Projects</h2>
+            <h2 class="section-title" data-lang="ru">Избранные проекты</h2>
+            <p class="section-sub" data-lang="en">Most popular and useful repositories</p>
+            <p class="section-sub" data-lang="ru">Самые популярные и полезные репозитории</p>
+
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h3>telegram-ai-chat-automation</h3>
+                    <p data-lang="en">
+                        Telegram Business bot that automatically replies to private messages using any OpenAI-compatible AI. 
+                        Supports conversation history, human-like replies and easy enable/disable per chat.
+                    </p>
+                    <p data-lang="ru">
+                        Telegram Business бот, который сам отвечает на личные сообщения через любой OpenAI-совместимый ИИ. 
+                        История диалога, человечные ответы и простое включение/выключение по чатам.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Telegram</span>
+                        <span class="tag">AI</span>
+                        <span class="tag">Automation</span>
+                    </div>
+                    <a href="https://github.com/AngelKlear-2/telegram-ai-chat-automation" target="_blank" class="card-link">View on GitHub →</a>
                 </div>
-                <div class="links">
-                    <a href="https://github.com/AngelKlear-2" target="_blank" rel="noopener">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="https://t.me/AngelKlear" target="_blank" rel="noopener" class="tg">
-                        <i class="fab fa-telegram-plane"></i> @AngelKlear
-                    </a>
+
+                <div class="card">
+                    <div class="card-icon">⛏️</div>
+                    <h3>buildpicks-source</h3>
+                    <p data-lang="en">
+                        Minecraft mod that adds an Emerald Pickaxe (better than diamond) plus two powerful treasure enchantments: 
+                        Vein Miner (3×3 area) and Auto Smelt for ores.
+                    </p>
+                    <p data-lang="ru">
+                        Мод для Minecraft с изумрудной киркой (лучше алмазной) и двумя мощными зачарованиями: 
+                        Vein Miner (ломает 3×3) и Auto Smelt для руд.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Minecraft</span>
+                        <span class="tag">Mod</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">Enchantments</span>
+                    </div>
+                    <a href="https://github.com/AngelKlear-2/buildpicks-source" target="_blank" class="card-link">View on GitHub →</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎮</div>
+                    <h3>mabfa</h3>
+                    <p data-lang="en">
+                        Lightweight AFK bot for Minecraft Java Edition (especially Aternos). 
+                        Auto-reconnect, anti-AFK movements, password support and very simple setup.
+                    </p>
+                    <p data-lang="ru">
+                        Лёгкий AFK-бот для Minecraft Java (особенно Aternos). 
+                        Авто-переподключение, анти-AFK движения, поддержка пароля и максимально простой запуск.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Mineflayer</span>
+                        <span class="tag">Minecraft</span>
+                        <span class="tag">AFK</span>
+                    </div>
+                    <a href="https://github.com/AngelKlear-2/mabfa" target="_blank" class="card-link">View on GitHub →</a>
                 </div>
             </div>
-        </div>
-
-        <!-- Repositories -->
-        <h2 class="section-title">
-            <i class="fas fa-code-branch"></i> Public Repositories
-        </h2>
-
-        <div class="repos">
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/telegram-ai-chat-automation" target="_blank" rel="noopener">telegram-ai-chat-automation</a>
-                <p class="repo-desc">Telegram Business bot that replies on your behalf using AI (OpenAI-compatible APIs like Groq).</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#3572A5"></span> Python</span></div>
-            </div>
-
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/mabfa" target="_blank" rel="noopener">mabfa</a>
-                <p class="repo-desc">MABFA (Minecraft AFK Bot For Aternos)</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#f1e05a"></span> JavaScript</span></div>
-            </div>
-
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/akprotocol" target="_blank" rel="noopener">akprotocol</a>
-                <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#8b949e"></span> —</span></div>
-            </div>
-
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/akfreedom" target="_blank" rel="noopener">akfreedom</a>
-                <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#8b949e"></span> —</span></div>
-            </div>
-
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/buildpicks-source" target="_blank" rel="noopener">buildpicks-source</a>
-                <p class="repo-desc">Emerald Pickaxe mod + Vein Miner and Auto Smelt enchantments for Minecraft.</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#b07219"></span> Java</span></div>
-            </div>
-
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/playmate_source" target="_blank" rel="noopener">playmate_source</a>
-                <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#b07219"></span> Java</span></div>
-            </div>
-
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/the-formless-mod" target="_blank" rel="noopener">the-formless-mod</a>
-                <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#e34c26"></span> HTML</span></div>
-            </div>
-
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/SC-2.05-DLL" target="_blank" rel="noopener">SC-2.05-DLL</a>
-                <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#8b949e"></span> —</span></div>
-            </div>
-
-            <div class="repo-card">
-                <a class="repo-name" href="https://github.com/AngelKlear-2/ollama_api_test" target="_blank" rel="noopener">ollama_api_test</a>
-                <p class="repo-desc">No description provided.</p>
-                <div class="repo-meta"><span><span class="lang-dot" style="background:#8b949e"></span> —</span></div>
-            </div>
-        </div>
+        </section>
 
         <footer>
-            <p>Built with GitHub Pages · <a href="https://github.com/AngelKlear-2/AngelKlear-2.github.io" target="_blank" rel="noopener">Source</a></p>
-            <p style="margin-top: 8px;">Based in Russia</p>
+            <p data-lang="en">Built with ❤️ · Open Source · From Russia</p>
+            <p data-lang="ru">Сделано с ❤️ · Open Source · Из России</p>
+            <p style="margin-top: 12px;">
+                <a href="https://github.com/AngelKlear-2" target="_blank">github.com/AngelKlear-2</a>
+            </p>
         </footer>
     </div>
 
     <script>
-        // ===== Theme toggle =====
-        const html = document.documentElement;
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-
-        function setTheme(theme) {
-            html.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-        }
-
-        // Load saved theme or prefer dark
-        const saved = localStorage.getItem('theme') || 'dark';
-        setTheme(saved);
-
-        themeToggle.addEventListener('click', () => {
-            const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            setTheme(next);
+        document.querySelectorAll('[data-set-lang]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.setLang;
+                document.body.classList.toggle('lang-ru', lang === 'ru');
+                document.querySelectorAll('[data-set-lang]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                localStorage.setItem('lang', lang);
+            });
         });
 
-        // ===== Custom inverted cursor circle =====
-        const circle = document.getElementById('cursorCircle');
-        let mouseX = 0, mouseY = 0;
-        let circleX = 0, circleY = 0;
-
-        // Only on devices with fine pointer (mouse)
-        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                circle.classList.add('active');
+        document.querySelectorAll('[data-theme]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                document.body.classList.toggle('theme-light', theme === 'light');
+                document.querySelectorAll('[data-theme]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                localStorage.setItem('theme', theme);
             });
+        });
 
-            document.addEventListener('mouseleave', () => {
-                circle.classList.remove('active');
+        document.querySelectorAll('[data-bg]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const bg = btn.dataset.bg;
+                document.body.classList.remove('bg-none', 'bg-orbs');
+                if (bg === 'none') document.body.classList.add('bg-none');
+                if (bg === 'orbs') document.body.classList.add('bg-orbs');
+                document.querySelectorAll('[data-bg]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                localStorage.setItem('bg', bg);
+                const canvas = document.getElementById('bg-canvas');
+                canvas.style.opacity = (bg === 'particles') ? '1' : '0';
             });
+        });
 
-            // Smooth follow
-            function animateCursor() {
-                circleX += (mouseX - circleX) * 0.18;
-                circleY += (mouseY - circleY) * 0.18;
-                circle.style.left = circleX + 'px';
-                circle.style.top = circleY + 'px';
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
-
-            // Enlarge when near / over text & interactive elements
-            const hoverTargets = 'h1, h2, p, a, .bio, .username, .repo-desc, .repo-name, .section-title, .meta-row span';
-
-            document.querySelectorAll(hoverTargets).forEach(el => {
-                el.addEventListener('mouseenter', () => circle.classList.add('hover-text'));
-                el.addEventListener('mouseleave', () => circle.classList.remove('hover-text'));
-            });
-        } else {
-            document.body.classList.remove('custom-cursor');
+        const savedLang = localStorage.getItem('lang');
+        if (savedLang === 'ru') {
+            document.body.classList.add('lang-ru');
+            document.querySelectorAll('[data-set-lang]').forEach(b => b.classList.toggle('active', b.dataset.setLang === 'ru'));
         }
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('theme-light');
+            document.querySelectorAll('[data-theme]').forEach(b => b.classList.toggle('active', b.dataset.theme === 'light'));
+        }
+        const savedBg = localStorage.getItem('bg') || 'particles';
+        if (savedBg !== 'particles') {
+            document.body.classList.add(savedBg === 'none' ? 'bg-none' : 'bg-orbs');
+            document.getElementById('bg-canvas').style.opacity = '0';
+            document.querySelectorAll('[data-bg]').forEach(b => b.classList.toggle('active', b.dataset.bg === savedBg));
+        }
+
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.z = Math.random() * 2 + 0.5;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX * this.z;
+                this.y += this.speedY * this.z;
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * this.z, 0, Math.PI * 2);
+                const isLight = document.body.classList.contains('theme-light');
+                ctx.fillStyle = isLight ? `rgba(79, 70, 229, ${this.opacity * 0.6})` : `rgba(165, 180, 252, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            const isLight = document.body.classList.contains('theme-light');
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = isLight
+                            ? `rgba(79, 70, 229, ${0.12 * (1 - dist / 120)})`
+                            : `rgba(124, 156, 255, ${0.15 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
     </script>
 </body>
 </html>
